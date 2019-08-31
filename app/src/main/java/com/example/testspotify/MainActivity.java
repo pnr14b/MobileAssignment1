@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -28,13 +29,11 @@ import com.spotify.sdk.android.authentication.AuthenticationResponse;
 import java.util.HashMap;
 import java.util.Map;
 
-
-
 import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class MainActivity<stringRequest> extends AppCompatActivity {
 
-    private static final String CLIENT_ID = "435dc6a412e0434d9923fe8d90e9cd01";
+    private static final String CLIENT_ID = "783249b827704cbdab0b62f069fe51c4";
     private static final String REDIRECT_URI = "youcustomprotocol://callback";
     private SpotifyAppRemote mSpotifyAppRemote;
 
@@ -123,8 +122,10 @@ public class MainActivity<stringRequest> extends AppCompatActivity {
                 case TOKEN:
                     // Handle successful response
                     Intent intent1 = new Intent(this, MySpotifyAuthenticationActivity.class);
+                    TextView text=findViewById(R.id.middle_text);
+                    text.setText("Authenticated");
                     startActivity(intent1);
-
+                    Log.d( "TESTT", response.getAccessToken());
 
 
 
@@ -133,10 +134,16 @@ public class MainActivity<stringRequest> extends AppCompatActivity {
                 // Auth flow returned an error
                 case ERROR:
                     // Handle error response
+                    TextView text1=findViewById(R.id.middle_text);
+                    text1.setText("Error");
+                    String logMessage = "Auth error: " + response.getError();
+                    Log.e( "Error: ", logMessage);
                     break;
 
                 // Most likely auth flow was cancelled
                 default:
+                    TextView text2=findViewById(R.id.middle_text);
+                    text2.setText("Default");
                     // Handle other cases
             }
         }
