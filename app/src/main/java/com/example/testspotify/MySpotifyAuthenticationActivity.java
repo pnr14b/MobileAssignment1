@@ -29,8 +29,6 @@ import com.spotify.sdk.android.authentication.AuthenticationResponse;
 import java.util.HashMap;
 import java.util.Map;
 
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
-
 public class MySpotifyAuthenticationActivity extends AppCompatActivity {
 
 
@@ -40,9 +38,59 @@ public class MySpotifyAuthenticationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_spotify_authentication);
     }
 
-    //private SpotifyAppRemote mSpotifyAppRemote;
+    public void requestTopSongs(String tok) {
+        // Instantiate the RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
 
-    //mSpotifyAppRemote.getPlayerApi().play("spotify:playlist:37i9dQZF1DX2sUQwD7tbmL");
+        String url = "https://api.spotify.com/v1/me/top/tracks";
+        //String url = "https://www.google.com";
+
+        StringRequest getRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        Log.d("Success",response);
+                        TextView text=findViewById(R.id.songText);
+                        text.setText("Songs Pulled: " + response);
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+                        Log.e("ERROR","error => "+error.toString());
+                        TextView text=findViewById(R.id.songText);
+                        text.setText("Error");
+                    }
+                }
+        )
+        {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String>  params = new HashMap<String, String>();
+                params.put("Content-Type", "application/json");
+                String auth = "Bearer " + tok;
+                //+ Base64.getEncoder().encodeToString(tok.getBytes());
+                params.put("Authorization", auth);
+
+
+
+                return params;
+            }
+        };
+
+        // Add the request to the RequestQueue.
+        queue.add(getRequest);
+    }
+
+    public void pullTopSongs(View view){
+        Intent intent1 = getIntent();
+        String tok = intent1.getStringExtra("AUTH_TOKEN");
+        requestTopSongs(tok);
+    }
 
 }
 

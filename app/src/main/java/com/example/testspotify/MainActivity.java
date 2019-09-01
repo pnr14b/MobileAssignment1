@@ -65,55 +65,6 @@ public class MainActivity<stringRequest> extends AppCompatActivity {
 
 
 
-    public void sendRequest(String tok) {
-
-
-
-    // Instantiate the RequestQueue.
-    RequestQueue queue = Volley.newRequestQueue(this);
-
-    String url = "https://api.spotify.com/v1/me/top/tracks";
-    //String url = "https://www.google.com";
-
-        StringRequest getRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>()
-                {
-                    @Override
-                    public void onResponse(String response) {
-                        // response
-                        Log.d("Success",response);
-                    }
-                },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO Auto-generated method stub
-                        Log.d("ERROR","error => "+error.toString());
-                    }
-                }
-        )
-        {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String>  params = new HashMap<String, String>();
-                params.put("Content-Type", "application/json");
-                String auth = "Bearer " + tok;
-                        //+ Base64.getEncoder().encodeToString(tok.getBytes());
-                params.put("Authorization", auth);
-
-
-
-                return params;
-            }
-        };
-
-    // Add the request to the RequestQueue.
-    queue.add(getRequest);
-
-}
-
-
     @Override
     protected void onStop() {
         super.onStop();
@@ -133,11 +84,8 @@ public class MainActivity<stringRequest> extends AppCompatActivity {
                 // Response was successful and contains auth token
                 case TOKEN:
                     // Handle successful response
-                    /*
                     Intent intent1 = new Intent(this, MySpotifyAuthenticationActivity.class);
-                    startActivity(intent1);
-                    */
-
+                    intent1.putExtra("AUTH_TOKEN", response.getAccessToken() );
 
                     TextView text=findViewById(R.id.middle_text);
                     text.setText("Authenticated");
@@ -145,7 +93,9 @@ public class MainActivity<stringRequest> extends AppCompatActivity {
                     //mSpotifyAppRemote.getPlayerApi().play("spotify:playlist:37i9dQZF1DX2sUQwD7tbmL");
                     Log.d( "TESTT", response.getAccessToken());
 
-                    sendRequest(response.getAccessToken());
+                    startActivity(intent1);
+
+                    //sendRequest(response.getAccessToken());
 
                     break;
 
