@@ -40,29 +40,12 @@ import java.util.Map;
 
 public class MySpotifyAuthenticationActivity extends AppCompatActivity {
 
-    List<lTrack> sampleTrackList = new ArrayList<>();
-
-    private void fillTrackList(){
-        for(int i = 0; i < 30; i++) {
-            sampleTrackList.add(new lTrack("Still Woozy", "Lava"));
-        }
-    }
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_spotify_authentication);
 
-        fillTrackList();
-        SimpleAdapter adapter = new SimpleAdapter(sampleTrackList);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.songList);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
     }
 
 
@@ -95,7 +78,13 @@ public class MySpotifyAuthenticationActivity extends AppCompatActivity {
     }
 
 
+    List<lTrack> sampleTrackList = new ArrayList<>();
+
     public void requestTopSongs(String tok) {
+
+        TextView text=findViewById(R.id.songText);
+        text.setText("Pulling Songs");
+
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
 
@@ -111,7 +100,9 @@ public class MySpotifyAuthenticationActivity extends AppCompatActivity {
 
                         try {
                             JSONObject resp = new JSONObject(response);
-                            //parseJson(resp);
+                            sampleTrackList = parseJson(resp);
+
+                            text.setText("Songs Pulled");
                         }
                         catch (JSONException e ){
                             Log.d("EXCEPTION","Could not parse response into object");
@@ -155,6 +146,16 @@ public class MySpotifyAuthenticationActivity extends AppCompatActivity {
         Intent intent1 = getIntent();
         String tok = intent1.getStringExtra("AUTH_TOKEN");
         requestTopSongs(tok);
+
+        SimpleAdapter adapter = new SimpleAdapter(sampleTrackList);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.songList);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+    }
+
+    public void pushToDB(View view){
+
     }
 
 }

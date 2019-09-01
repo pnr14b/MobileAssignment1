@@ -15,6 +15,6 @@ public class SimpleViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bindData(final lTrack track1) {
-        simpleTextView.setText(track1.getSong() + " by " + track1.getArtist() + " on " + track1.getAlbum());
+        simpleTextView.setText(track1.getSong() + " by " + track1.getArtist());
     }
 }

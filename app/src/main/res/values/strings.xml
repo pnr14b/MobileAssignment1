@@ -10,5 +10,5 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="middle_string">\"Hello World\"</string>
-    <string name="pull_text">Click the button to pull songs</string>
+    <string name="pull_text">Click the button to pull recent songs</string>
 </resources>
