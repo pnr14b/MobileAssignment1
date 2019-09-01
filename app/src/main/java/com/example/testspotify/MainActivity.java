@@ -14,9 +14,13 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.testspotify.ui.login.LoginActivity;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.JsonObject;
 import com.spotify.android.appremote.api.ConnectionParams;
 import com.spotify.android.appremote.api.Connector;
 import com.spotify.android.appremote.api.SpotifyAppRemote;
@@ -25,6 +29,8 @@ import com.spotify.protocol.types.Track;
 import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
+
+import org.json.JSONObject;
 
 import java.util.Base64;
 import java.util.HashMap;
@@ -37,10 +43,14 @@ public class MainActivity<stringRequest> extends AppCompatActivity {
     private static final String CLIENT_ID = "783249b827704cbdab0b62f069fe51c4";
     private static final String REDIRECT_URI = "youcustomprotocol://callback";
     public SpotifyAppRemote mSpotifyAppRemote;
+    FirebaseDatabase database;
+    DatabaseReference myRef;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        database = FirebaseDatabase.getInstance("https://testspotify-42d61.firebaseio.com/");
+        database.getReference("hello").setValue("We pushing from wyndham");
     }
 
 
@@ -54,14 +64,13 @@ public class MainActivity<stringRequest> extends AppCompatActivity {
         AuthenticationRequest.Builder builder =
                 new AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, REDIRECT_URI);
 
-        builder.setScopes(new String[]{"user-top-read"});
+        builder.setScopes(new String[]{"user-top-read","user-library-read","user-read-recently-played","user-modify-playback-state"});
         AuthenticationRequest request = builder.build();
 
         AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);
 
 
     }
-
 
 
 
