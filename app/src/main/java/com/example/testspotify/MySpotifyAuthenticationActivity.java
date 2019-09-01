@@ -26,17 +26,24 @@ import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class MySpotifyAuthenticationActivity extends AppCompatActivity {
 
 
+   
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_spotify_authentication);
     }
+
+
 
     public void requestTopSongs(String tok) {
         // Instantiate the RequestQueue.
@@ -51,6 +58,13 @@ public class MySpotifyAuthenticationActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         // response
+
+                        try {
+                            JSONObject resp = new JSONObject(response);
+                        }
+                        catch (JSONException e ){
+                            Log.d("EXCEPTION","Could not parse response into object");
+                        }
                         Log.d("Success",response);
                         TextView text=findViewById(R.id.songText);
                         text.setText("Songs Pulled: " + response);
