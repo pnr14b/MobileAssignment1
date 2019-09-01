@@ -26,6 +26,7 @@ import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
 
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,7 +36,7 @@ public class MainActivity<stringRequest> extends AppCompatActivity {
 
     private static final String CLIENT_ID = "783249b827704cbdab0b62f069fe51c4";
     private static final String REDIRECT_URI = "youcustomprotocol://callback";
-    private SpotifyAppRemote mSpotifyAppRemote;
+    public SpotifyAppRemote mSpotifyAppRemote;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +73,7 @@ public class MainActivity<stringRequest> extends AppCompatActivity {
     RequestQueue queue = Volley.newRequestQueue(this);
 
     String url = "https://api.spotify.com/v1/me/top/tracks";
-
+    //String url = "https://www.google.com";
 
         StringRequest getRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>()
@@ -91,12 +92,15 @@ public class MainActivity<stringRequest> extends AppCompatActivity {
                         Log.d("ERROR","error => "+error.toString());
                     }
                 }
-        ) {
+        )
+        {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String>  params = new HashMap<String, String>();
-                params.put("Content-Type", "application/json; charset=utf-8");
-                params.put("Authorization", tok);
+                params.put("Content-Type", "application/json");
+                String auth = "Bearer " + tok;
+                        //+ Base64.getEncoder().encodeToString(tok.getBytes());
+                params.put("Authorization", auth);
 
 
 
@@ -108,6 +112,14 @@ public class MainActivity<stringRequest> extends AppCompatActivity {
     queue.add(getRequest);
 
 }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        SpotifyAppRemote.disconnect(mSpotifyAppRemote);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
@@ -121,13 +133,19 @@ public class MainActivity<stringRequest> extends AppCompatActivity {
                 // Response was successful and contains auth token
                 case TOKEN:
                     // Handle successful response
+                    /*
                     Intent intent1 = new Intent(this, MySpotifyAuthenticationActivity.class);
+                    startActivity(intent1);
+                    */
+
+
                     TextView text=findViewById(R.id.middle_text);
                     text.setText("Authenticated");
-                    startActivity(intent1);
+
+                    //mSpotifyAppRemote.getPlayerApi().play("spotify:playlist:37i9dQZF1DX2sUQwD7tbmL");
                     Log.d( "TESTT", response.getAccessToken());
 
-
+                    sendRequest(response.getAccessToken());
 
                     break;
 
