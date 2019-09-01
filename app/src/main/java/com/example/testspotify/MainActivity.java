@@ -50,7 +50,7 @@ public class MainActivity<stringRequest> extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         database = FirebaseDatabase.getInstance("https://testspotify-42d61.firebaseio.com/");
-        //                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      database.getReference("hello").setValue("this is a test");
+        database.getReference("hello").setValue("We pushing from wyndham");
     }
 
 
@@ -74,50 +74,6 @@ public class MainActivity<stringRequest> extends AppCompatActivity {
 
 
 
-
-    public void sendRequest(String tok) {
-
-
-
-    // Instantiate the RequestQueue.
-    RequestQueue queue = Volley.newRequestQueue(this);
-
-    String url = "https://api.spotify.com/v1/me/player/recently-played";
-
-        Map<String, String> params = new HashMap();
-        params.put("first_param", "5");
-
-
-        JSONObject parameters = new JSONObject(params);
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PUT, url,parameters,new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                Log.i("onResponse", response.toString());
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("onErrorResponse", error.toString());
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-
-
-                headers.put("Authorization", "Bearer " + tok);
-                return headers;
-            }
-        };
-        queue.add(request);
-    // Add the request to the RequestQueue.
-    queue.add(request);
-
-}
-
-
     @Override
     protected void onStop() {
         super.onStop();
@@ -137,11 +93,8 @@ public class MainActivity<stringRequest> extends AppCompatActivity {
                 // Response was successful and contains auth token
                 case TOKEN:
                     // Handle successful response
-                    /*
                     Intent intent1 = new Intent(this, MySpotifyAuthenticationActivity.class);
-                    startActivity(intent1);
-                    */
-
+                    intent1.putExtra("AUTH_TOKEN", response.getAccessToken() );
 
                     TextView text=findViewById(R.id.middle_text);
                     text.setText("Authenticated");
@@ -149,7 +102,9 @@ public class MainActivity<stringRequest> extends AppCompatActivity {
                     //mSpotifyAppRemote.getPlayerApi().play("spotify:playlist:37i9dQZF1DX2sUQwD7tbmL");
                     Log.d( "TESTT", response.getAccessToken());
 
-                    sendRequest(response.getAccessToken());
+                    startActivity(intent1);
+
+                    //sendRequest(response.getAccessToken());
 
                     break;
 
