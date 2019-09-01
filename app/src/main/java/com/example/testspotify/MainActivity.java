@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -51,6 +52,10 @@ public class MainActivity<stringRequest> extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         database = FirebaseDatabase.getInstance("https://testspotify-42d61.firebaseio.com/");
         database.getReference("hello").setValue("We pushing from wyndham");
+
+        Button spotButton = findViewById(R.id.spotifyButton);
+        spotButton.setEnabled(false);
+
     }
 
 
@@ -93,14 +98,19 @@ public class MainActivity<stringRequest> extends AppCompatActivity {
                 // Response was successful and contains auth token
                 case TOKEN:
                     // Handle successful response
+
+                    EditText userT = findViewById(R.id.userText);
+                    String username = userT.getText().toString();
+
                     Intent intent1 = new Intent(this, MySpotifyAuthenticationActivity.class);
                     intent1.putExtra("AUTH_TOKEN", response.getAccessToken() );
+                    intent1.putExtra("USER", username);
 
                     TextView text=findViewById(R.id.middle_text);
                     text.setText("Authenticated");
 
                     //mSpotifyAppRemote.getPlayerApi().play("spotify:playlist:37i9dQZF1DX2sUQwD7tbmL");
-                    Log.d( "TESTT", response.getAccessToken());
+                    Log.d( "TESTT", response.getAccessToken() + " " + username);
 
                     startActivity(intent1);
 
@@ -112,7 +122,7 @@ public class MainActivity<stringRequest> extends AppCompatActivity {
                 case ERROR:
                     // Handle error response
                     TextView text1=findViewById(R.id.middle_text);
-                    text1.setText("Error");
+                    text1.setText("Error in Spotify Login");
                     String logMessage = "Auth error: " + response.getError();
                     Log.e( "Error: ", logMessage);
                     break;
@@ -126,8 +136,20 @@ public class MainActivity<stringRequest> extends AppCompatActivity {
         }
     }
 
-
-
+    public void userEnter(View view) {
+        TextView text2=findViewById(R.id.middle_text);
+        EditText userT = findViewById(R.id.userText);
+        Button spotButton = findViewById(R.id.spotifyButton);
+        String userName = userT.getText().toString();
+        if(userName.equals("username") || userName.equals("")){
+            text2.setText("Try a different username");
+        }
+        else{
+            text2.setText("Click the button below to register");
+            spotButton.setText("Login to Spotify");
+            spotButton.setEnabled(true);
+        }
+    }
 
 
 }

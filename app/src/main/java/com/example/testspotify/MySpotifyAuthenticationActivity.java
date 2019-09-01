@@ -80,7 +80,7 @@ public class MySpotifyAuthenticationActivity extends AppCompatActivity {
 
     List<lTrack> sampleTrackList = new ArrayList<>();
 
-    public void requestTopSongs(String tok) {
+    public void requestTopSongs(String tok, String user) {
 
         TextView text=findViewById(R.id.songText);
         text.setText("Pulling Songs");
@@ -145,7 +145,8 @@ public class MySpotifyAuthenticationActivity extends AppCompatActivity {
     public void pullTopSongs(View view){
         Intent intent1 = getIntent();
         String tok = intent1.getStringExtra("AUTH_TOKEN");
-        requestTopSongs(tok);
+        String user = intent1.getStringExtra("USER");
+        requestTopSongs(tok,user);
 
         SimpleAdapter adapter = new SimpleAdapter(sampleTrackList);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.songList);
