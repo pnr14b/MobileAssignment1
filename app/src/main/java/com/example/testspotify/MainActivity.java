@@ -50,7 +50,7 @@ public class MainActivity<stringRequest> extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         database = FirebaseDatabase.getInstance("https://testspotify-42d61.firebaseio.com/");
-        //database.getReference("hello").setValue("this is a test");
+        //                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      database.getReference("hello").setValue("this is a test");
     }
 
 
