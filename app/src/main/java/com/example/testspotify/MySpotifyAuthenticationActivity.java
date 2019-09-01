@@ -8,6 +8,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -26,16 +28,35 @@ import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+
 public class MySpotifyAuthenticationActivity extends AppCompatActivity {
+
+    List<lTrack> sampleTrackList = new ArrayList<>();
+
+    private void fillTrackList(){
+        for(int i = 0; i < 30; i++) {
+            sampleTrackList.add(new lTrack("Still Woozy", "Lava", "Lately EP"));
+        }
+    }
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_spotify_authentication);
+
+        fillTrackList();
+        SimpleAdapter adapter = new SimpleAdapter(sampleTrackList);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.songList);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
     }
 
     public void requestTopSongs(String tok) {
