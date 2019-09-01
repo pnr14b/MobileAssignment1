@@ -1,14 +1,18 @@
 package com.example.testspotify;
 
-public class Track {
+public class lTrack {
     private String artist;
     private String song;
     private String album;
 
-    public Track(String artist, String song, String album){
+    public lTrack(String artist, String song){
         this.artist = artist;
-        this.album = album;
+
         this.song = song;
+    }
+
+    public lTrack(){
+
     }
 
     public String getSong(){
@@ -19,7 +23,5 @@ public class Track {
         return this.artist;
     }
 
-    public String getAlbum(){
-        return this.album;
-    }
+
 }
