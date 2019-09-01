@@ -28,6 +28,10 @@ import com.spotify.sdk.android.authentication.AuthenticationClient;
 import com.spotify.sdk.android.authentication.AuthenticationRequest;
 import com.spotify.sdk.android.authentication.AuthenticationResponse;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -40,9 +44,11 @@ public class MySpotifyAuthenticationActivity extends AppCompatActivity {
 
     private void fillTrackList(){
         for(int i = 0; i < 30; i++) {
-            sampleTrackList.add(new lTrack("Still Woozy", "Lava", "Lately EP"));
+            sampleTrackList.add(new lTrack("Still Woozy", "Lava"));
         }
     }
+
+
 
 
 
@@ -59,11 +65,41 @@ public class MySpotifyAuthenticationActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
+
+
+    public List<lTrack> parseJson(JSONObject obj){
+        ArrayList<lTrack> tracks = new ArrayList<>();
+        lTrack t;
+        try {
+            JSONArray items = obj.getJSONArray("items");
+            for(int i = 0; i < items.length();i++){
+            t = new lTrack();
+
+                String song = items.getJSONObject(i).getJSONObject("track").getString("name");
+                String artist = items.getJSONObject(i).getJSONObject("track").getJSONArray("artists").getJSONObject(0).getString("name");
+
+                System.out.println(song + " " + artist);
+                tracks.add(new lTrack(artist,song));
+
+
+            }
+        }
+        catch (JSONException e){
+
+        }
+
+
+        return tracks;
+
+
+    }
+
+
     public void requestTopSongs(String tok) {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        String url = "https://api.spotify.com/v1/me/top/tracks";
+        String url = "https://api.spotify.com/v1/me/player/recently-played";
         //String url = "https://www.google.com";
 
         StringRequest getRequest = new StringRequest(Request.Method.GET, url,
@@ -72,9 +108,17 @@ public class MySpotifyAuthenticationActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         // response
-                        Log.d("Success",response);
-                        TextView text=findViewById(R.id.songText);
-                        text.setText("Songs Pulled: " + response);
+
+                        try {
+                            JSONObject resp = new JSONObject(response);
+                            //parseJson(resp);
+                        }
+                        catch (JSONException e ){
+                            Log.d("EXCEPTION","Could not parse response into object");
+                        }
+                       // Log.d("Success",response);
+                        //TextView text=findViewById(R.id.songText);
+                        //text.setText("Songs Pulled: " + response);
                     }
                 },
                 new Response.ErrorListener()

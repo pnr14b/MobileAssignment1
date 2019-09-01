@@ -10,6 +10,10 @@ public class lTrack {
         this.song = song;
     }
 
+    public lTrack(){
+
+    }
+
     public String getSong(){
         return this.song;
     }
@@ -18,7 +22,5 @@ public class lTrack {
         return this.artist;
     }
 
-    public String getAlbum(){
-        return this.album;
-    }
+
 }
