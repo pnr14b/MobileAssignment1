@@ -5,9 +5,8 @@ public class lTrack {
     private String song;
     private String album;
 
-    public lTrack(String artist, String song, String album){
+    public lTrack(String artist, String song){
         this.artist = artist;
-        this.album = album;
         this.song = song;
     }
 
