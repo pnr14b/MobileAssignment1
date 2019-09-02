@@ -169,23 +169,6 @@ public class MySpotifyAuthenticationActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
-    public List<lTrack> myTracks;
-
-    public void pushToDB(View view){
-
-        Intent currentIntent = getIntent();
-
-        Intent intent = new Intent(this, PullActivity.class);
-        intent.putExtra("USER", currentIntent.getStringExtra("USER"));
-
-
-        startActivity(intent);
-
-
-
-
-
-    }
 
 }
 
