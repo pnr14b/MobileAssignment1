@@ -19,6 +19,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.testspotify.ui.login.LoginActivity;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.spotify.android.appremote.api.ConnectionParams;
 import com.spotify.android.appremote.api.Connector;
 import com.spotify.android.appremote.api.SpotifyAppRemote;
@@ -37,6 +41,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
+
 
 public class MySpotifyAuthenticationActivity extends AppCompatActivity {
 
@@ -45,9 +51,11 @@ public class MySpotifyAuthenticationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_spotify_authentication);
+        database = FirebaseDatabase.getInstance("https://testspotify-42d61.firebaseio.com/");
 
     }
 
+    public String USER;
 
 
     public List<lTrack> parseJson(JSONObject obj){
@@ -79,6 +87,8 @@ public class MySpotifyAuthenticationActivity extends AppCompatActivity {
 
 
     List<lTrack> sampleTrackList = new ArrayList<>();
+    public FirebaseDatabase database;
+    String jsonString;
 
     public void requestTopSongs(String tok, String user) {
 
@@ -101,8 +111,12 @@ public class MySpotifyAuthenticationActivity extends AppCompatActivity {
                         try {
                             JSONObject resp = new JSONObject(response);
                             sampleTrackList = parseJson(resp);
+                            jsonString = response;
 
                             text.setText("Songs Pulled");
+
+                            database = FirebaseDatabase.getInstance("https://testspotify-42d61.firebaseio.com/");
+                            database.getReference(user).setValue(sampleTrackList);
                         }
                         catch (JSONException e ){
                             Log.d("EXCEPTION","Could not parse response into object");
@@ -155,7 +169,21 @@ public class MySpotifyAuthenticationActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
+    public List<lTrack> myTracks;
+
     public void pushToDB(View view){
+
+        Intent currentIntent = getIntent();
+
+        Intent intent = new Intent(this, PullActivity.class);
+        intent.putExtra("USER", currentIntent.getStringExtra("USER"));
+
+
+        startActivity(intent);
+
+
+
+
 
     }
 
