@@ -1,0 +1,93 @@
+{
+  "project_info": {
+    "project_number": "447922600671",
+    "firebase_url": "https://testspotify-42d61.firebaseio.com",
+    "project_id": "testspotify-42d61",
+    "storage_bucket": "testspotify-42d61.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:447922600671:android:a1b694a9c41f94c6",
+        "android_client_info": {
+          "package_name": "com.example.spotifytest3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "447922600671-jh6gtp42h3hj45lel4h18resng1ngcko.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.spotifytest3",
+            "certificate_hash": "c62b31379d22883b414da6801fc7bb7f8e67a4ea"
+          }
+        },
+        {
+          "client_id": "447922600671-h6bdjgtgi3aep468rg2usf57jhcnbki6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3mmmcdv2R7YmQc1J_0LDbbgn9xsiIIDQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "447922600671-h6bdjgtgi3aep468rg2usf57jhcnbki6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:447922600671:android:7200e5c7d4517a09",
+        "android_client_info": {
+          "package_name": "com.example.testspotify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "447922600671-06no89lr7avnstopiul8odh1rdr2e11e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.testspotify",
+            "certificate_hash": "c62b31379d22883b414da6801fc7bb7f8e67a4ea"
+          }
+        },
+        {
+          "client_id": "447922600671-iseg4cs57v0r10mo5apd1fun713u66tc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.testspotify",
+            "certificate_hash": "989bb6c1c3898739f64d0dd6876150c00f9b206f"
+          }
+        },
+        {
+          "client_id": "447922600671-h6bdjgtgi3aep468rg2usf57jhcnbki6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3mmmcdv2R7YmQc1J_0LDbbgn9xsiIIDQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "447922600671-h6bdjgtgi3aep468rg2usf57jhcnbki6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
